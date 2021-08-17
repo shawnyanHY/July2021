@@ -11,9 +11,6 @@ namespace MovieShopMVC.Controllers
     public class AdminController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }

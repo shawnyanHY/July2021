@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.ServiceInterfaces;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,59 +13,20 @@ namespace MovieShopMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private MovieService _movieService;
+        private IMovieService _movieService;
 
-        public HomeController()
+        public HomeController(IMovieService movieService)
         {
-            _movieService = new MovieService();
+            _movieService = movieService;
+
         }
 
-        public IActionResult Index()
-
+        public async Task<IActionResult>  Index()
         {
-            var movies = _movieService.GetTopRevenueMovies();
-            // 3 ways to pass data from controller to view
-            // 1 Strongly Typed Models ******
-            // 2 ViewBag
-            // 3 ViewData
-            // get top revenue movie and display on the view
-            // localhost:5001/movies/details/2
-
-            ViewBag.PageTitle = "Top Revenue Movie";
-            ViewData["TotalMovies"] = movies.Count();
-
-            return View(movies);
+            var movieCards = await _movieService.GetTopRevenueMovies();
+            return View(movieCards);
         }
 
-
-
-        // Clean Architecture
-
-        // Interfaces
-
-        // IMovieService
-
-        // class MovieService : SOmeClass, GenreService
-        // {
-        // }
-
-
-        // class MovieService2 : IMovieSerivce
-        // {
-        // }
-
-        // Depedency Injection
-        // Application core layer
-        // Entities => C# classes that repewsents your domian/database objjects =>
-        // Models => 
-
-        // 15 tables
-        // 20 columns , Movie Table
-        // Entity => Movie 20 properties
-
-        // Models => UI
-        // Movie list => MovieCardModel => id, title, posterimage
-        // DTO (Data Transfer Objetcs) => API
 
         public IActionResult Privacy()
         {
