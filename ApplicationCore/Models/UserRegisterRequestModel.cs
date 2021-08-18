@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using ApplicationCore.Validations;
 
 namespace ApplicationCore.Models
 {
@@ -26,6 +27,7 @@ namespace ApplicationCore.Models
 
         [DataType( DataType.Date)]
         [Required(ErrorMessage = "Date Of Birth cannot be empty")]
+        [MaximumYear(1920)]
        public DateTime DateOfBirth { get; set; }
     }
 }
